@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言最近因为想把MacPro上的多个Python版本清理一下，只留下系统自带的2.7和最新的3.7.0两个版本，把系统弄乱了，导致Dropzone中的七牛云拖拽上传插件无法工作，根据错误信息修改环境变量、重装Python等忙乎半天也没有解决，一怒之下决定使用Time Machine恢复一下。 实不相瞒，这是我使用三年多macOS来第一次用Time Machine恢复系统，大概这就是“有备无患”这个">
+<meta name="keywords" content="macOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始打造优雅易用的macOS之系统及软件安装">
+<meta property="og:url" content="http://pbeta.cn/2018/10/22/从零开始打造优雅易用的macOS之系统及软件安装/index.html">
+<meta property="og:site_name" content="Way to Go">
+<meta property="og:description" content="前言最近因为想把MacPro上的多个Python版本清理一下，只留下系统自带的2.7和最新的3.7.0两个版本，把系统弄乱了，导致Dropzone中的七牛云拖拽上传插件无法工作，根据错误信息修改环境变量、重装Python等忙乎半天也没有解决，一怒之下决定使用Time Machine恢复一下。 实不相瞒，这是我使用三年多macOS来第一次用Time Machine恢复系统，大概这就是“有备无患”这个">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-mbp.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-usb.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-newos1.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-newos2.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-newos3.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-timemachine.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero1-guest.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero1-finder.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero1-fn.png">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-homebrewinstall0.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-homebrewinstall.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-homebrewsuccess.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-homebrewcask1.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-getcask.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-iterm3.png-w800">
+<meta property="og:updated_time" content="2018-10-25T07:19:29.180Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始打造优雅易用的macOS之系统及软件安装">
+<meta name="twitter:description" content="前言最近因为想把MacPro上的多个Python版本清理一下，只留下系统自带的2.7和最新的3.7.0两个版本，把系统弄乱了，导致Dropzone中的七牛云拖拽上传插件无法工作，根据错误信息修改环境变量、重装Python等忙乎半天也没有解决，一怒之下决定使用Time Machine恢复一下。 实不相瞒，这是我使用三年多macOS来第一次用Time Machine恢复系统，大概这就是“有备无患”这个">
+<meta name="twitter:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-mbp.png-w800">
+
+
+
+
+
+
+  <link rel="canonical" href="http://pbeta.cn/2018/10/22/从零开始打造优雅易用的macOS之系统及软件安装/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>从零开始打造优雅易用的macOS之系统及软件安装 | Way to Go</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126629388-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-126629388-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Way to Go</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Something Remains</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-software">
+    <a href="/software" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-download"></i> <br>软件</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://pbeta.cn/2018/10/22/从零开始打造优雅易用的macOS之系统及软件安装/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Way to Go">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从零开始打造优雅易用的macOS之系统及软件安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-22 14:56:27" itemprop="dateCreated datePublished" datetime="2018-10-22T14:56:27+08:00">2018-10-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-25 15:19:29" itemprop="dateModified" datetime="2018-10-25T15:19:29+08:00">2018-10-25</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近因为想把MacPro上的多个Python版本清理一下，只留下系统自带的2.7和最新的3.7.0两个版本，把系统弄乱了，导致Dropzone中的七牛云拖拽上传插件无法工作，根据错误信息修改环境变量、重装Python等忙乎半天也没有解决，一怒之下决定使用Time Machine恢复一下。</p>
+<p>实不相瞒，这是我使用三年多macOS来第一次用Time Machine恢复系统，大概这就是“有备无患”这个词所表达的内涵……本来以为100多个G的备份恢复不会太久，可事与愿违，看进度条提示，要近1小时才能恢复完，吃了点东西回来看了下还要40分钟，这时突发奇想，干脆重装一下系统算了！</p>
+<p>说干就干，于是就有了接下来的生命浪费计划以及这篇文章。</p>
+<a id="more"></a>
+<h2 id="为什么要重装系统"><a href="#为什么要重装系统" class="headerlink" title="为什么要重装系统"></a>为什么要重装系统</h2><p>用Windows的时候，每年至少重装一次系统，有时甚至一两个月就重装一次，Windows系统越用越卡似乎不可避免，但macOS基本上解决了这个问题，所以大部分macOS用户大概都从来没有重装过系统，但实际上，作为一个想要掌控自己电脑的人，仍然有充分的理由去重装：</p>
+<ul>
+<li><p><strong>其一，Home文件夹下积累了大量隐藏文件和文件夹</strong>：熟悉Linux的朋友都知道，多数软件的配置文件形式一般是<code>~/.xxx</code>，要么是一个文件，要么是一个文件夹带着一家子，呆在别的地方我们可能看不到，但呆在Home目录看着就有些烦了，比如我的MacBook，现在是这样的：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-mbp.png-w800" alt="Home目录下的隐藏文件"><br>这还只是其中一部分，当然有一部分我知道是什么，但恕本人水平有限，有些文件和文件夹我并不知道是系统带来的还是什么软件带来的，理论上讲是可以随便删，但万一搞乱了什么也很烦对不对，所以一直就眼不见心不烦的和平共处，毕竟不是经常需要按<code>Ctrl+Shift+.</code> 来查看这些隐藏文件的，但这<strong>影响了我一个想法的实现，就是配置文件的全面云端化，即把这些各种.xxx全部同步到云端，方便多终端同步，避免配置丢失</strong>；</p>
+</li>
+<li><p><strong>其二，软件安装来源不一，软件安装位置杂乱</strong>：macOS下安装软件的方法很多，App Store安装，官网或第三方网站下载安装，以及现在非常受欢迎的Homebrew安装，还可以自己下载源代码编译，很多时候我们查着Google装软件的时候都是交错使用各种不同的软件安装方式，这也预示着软件安装位置基本上是任人宰割，这实在不是什么好事情，<strong>如果能再重装一次，我会列一个清单，记录要装的软件，安装的方式，对某些文件夹的改变之类，方便日后再重装或者更新。</strong></p>
+</li>
+<li><p><strong>其三，可以和各种残留说再见</strong>：不管是不是用CleanMyMac之类的垃圾清理软件清理系统，经过长期使用，macOS都会留下或多或少的残留，不管是配置文件也好，还是依赖的库也好，能清理掉总不是件坏事情，对吧！</p>
+</li>
+</ul>
+<h2 id="制作macOS-Mojave安装盘"><a href="#制作macOS-Mojave安装盘" class="headerlink" title="制作macOS Mojave安装盘"></a>制作macOS Mojave安装盘</h2><p>我隐约记得三年多前我拿到这台MacPro的时候，制作过一次USB安装盘，步骤当然早就忘得一干二净，自己找磁盘工具也没看到能制作系统恢复盘的地方，怎么办呢，当然是Google一下，下面的内容，主要参考自<strong>异次元软件世界</strong>的<a href="https://www.iplaysoft.com/macos-usb-install-drive.html" target="_blank" rel="noopener">这篇文章</a>，但原文说的并不清楚，简单来说，就是以下几步：</p>
+<ol>
+<li><p>找一个U盘，速度越快越好，容量不要低于16G，然后打开磁盘工具，格式化成“macOS扩展(日志式)”格式，并把U盘名称改为Mojave；</p>
+</li>
+<li><p>如果你还没装macOS Mojave，那很好，直接从App Store里搜索macOS Mojave，然后点击下载，就会把“安装macOS Mojave”下载到应用程序中；</p>
+</li>
+<li><p>如果你和我一样，是在一台已经升级了macOS Mojave的机器上做这一步，那你需要从<a href="https://pan.baidu.com/share/init?surl=Tz86rXPTLjaHid1tsPx_MA" target="_blank" rel="noopener">这里(提取码d5n2)</a>下载dmg文件，然后加载，把里面的“安装macOS Mojave”安装到系统的应用程序文件夹中（也就是达到和2一样的效果）；</p>
+</li>
+<li><p>打开终端，执行如下命令：</p>
+<blockquote>
+<p>sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia –volume /Volumes/Mojave /Applications/Install\ macOS\ Mojave.app –nointeraction</p>
+</blockquote>
+</li>
+<li><p>如果命令正确的话，你就会看到， 最后告诉你<code>Install media now available</code> ：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-usb.png-w800" alt="制作系统安装盘"></p>
+</li>
+</ol>
+<p>OK，大功告成，有了这张启动U盘，就可以在任意苹果电脑上安装macOS Mojave了。</p>
+<h2 id="全新安装macOS-Mojave"><a href="#全新安装macOS-Mojave" class="headerlink" title="全新安装macOS Mojave"></a>全新安装macOS Mojave</h2><p>我们知道，开机的时候按住<code>Command+R</code>就能进入macOS的恢复模式，这时候可以从Time Machine恢复系统或者直接重新安装macOS，但这种方式安装是无法全新安装的，毕竟不可能把自己抹掉，所以我们需要刚刚制作的USB启动盘来安装，将U盘插入电脑后重启，同时按住<code>option</code>键，从弹出的几个启动盘中选择U盘，稍等片刻会进入和直接开机按<code>Command+R</code>一样的界面，这时可以先抹掉系统盘，然后选择“安装macOS Mojave”。</p>
+<p>安装速度比较快，等待十几分钟就进入系统界面，开始一些初始设置，很傻瓜化，这里就不贴图了，之后你就拥有了一台全新安装macOS Mojave的电脑，一切都是全新的，我们打开Finder，打开主要目录，并用<code>Command+Shift+.</code>显示隐藏文件，看一下刚装完系统时他们是什么样子的：</p>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-newos1.png-w800" alt="全新安装后的Home文件夹"><br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-newos2.png-w800" alt="全新安装后的根目录"><br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-newos3.png-w800" alt="全新安装后的资源库目录"></p>
+<p>比较一下使用了几年的macOS，这简直太干净了，Home文件夹下没有任何软件的配置文件，那个<code>.CFUserTextEncoding</code>和系统编码有关，我没有仔细研究，不必理会就是，有兴趣的可以Google，有详细说明。</p>
+<h2 id="设置Time-Machine"><a href="#设置Time-Machine" class="headerlink" title="设置Time Machine"></a>设置Time Machine</h2><p>如果你从来不使用Time Machine，这一步可以略过，Time Machine都说好，但我并没有真正的利用过这个功能，之前一直用一台空闲的MacMini在局域网备份，最近嫌速度慢外接了一个雷电硬盘盒放了个旧的3T的HDD，拿出了1T专门用来备份，不过今天的经验告诉我，100多MB的读写速度还是不够，想要Time Machine用的舒服，你需要上SSD，毕竟大量小文件需要4K读写能力啊。</p>
+<p>具体设置略过，设置好了就让他自己备份就好，从来不必关心：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-timemachine.png-w800" alt="Time Machine"></p>
+<h2 id="系统安装后几个改动"><a href="#系统安装后几个改动" class="headerlink" title="系统安装后几个改动"></a>系统安装后几个改动</h2><h3 id="关闭Guest用户"><a href="#关闭Guest用户" class="headerlink" title="关闭Guest用户"></a>关闭Guest用户</h3><p>全新安装macOS后，系统默认打开Guest用户，但大部用户的Mac设备都是一人使用，Guest用户意义不大，打开系统设置，进入”用户与群组“，关闭Guest用户：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero1-guest.png-w800" alt="关闭Guest用户"></p>
+<h3 id="打开允许从”任何来源“安装软件"><a href="#打开允许从”任何来源“安装软件" class="headerlink" title="打开允许从”任何来源“安装软件"></a>打开允许从”任何来源“安装软件</h3><p>macOS默认关闭了用户允许从”任何来源“安装软件的选项，需要我们从终端运行以下命令来打开：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-disable</span><br></pre></td></tr></table></figure></p>
+<p>输入命令后，根据提示输入密码，即可开启从”任何来源“安装软件，从第三方安装安装软件时不会再出现文件损坏的问题了。</p>
+<h3 id="不在桌面显示卷图标"><a href="#不在桌面显示卷图标" class="headerlink" title="不在桌面显示卷图标"></a>不在桌面显示卷图标</h3><p>macOS默认会在桌面显示外接磁盘、光盘等图标，影响美观，我喜欢桌面上保持空白，所以一直是关闭掉桌面图标的显示，相关设置位置在Finder的偏好设置中，打开Finder，选择偏好设置：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero1-finder.png-w800" alt="关闭桌面图标显示"><br>另外，在Finder设置的”边栏“选项卡中，选中Home目录，方便从Finder从快速进入Home目录。</p>
+<h3 id="修改常用快捷键"><a href="#修改常用快捷键" class="headerlink" title="修改常用快捷键"></a>修改常用快捷键</h3><p>由于长期使用Alfred替代系统自带的Spotlight，因此呼出Spotlight的默认快捷键<code>Command+空格</code>就存在问题，之前我是选择将输入法切换由<code>Ctrl+空格</code>切换至<code>Command+空格</code>，将Spotlight快捷键则对应的更换成<code>Ctrl+空格</code>。</p>
+<p>不过自从开始使用改键工具后，我将<code>右Command</code>设置成了输入法切换键，<code>Command+空格</code>则空出来了，需要利用起来。</p>
+<p>另外，我习惯关闭Mac键盘默认F1-F12功能键盘的媒体功能，使用Fn+功能键来控制媒体，设置如下：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero1-fn.png" alt="关闭功能键区默认媒体键"></p>
+<h2 id="安装基础工具Xcode和Homebrew"><a href="#安装基础工具Xcode和Homebrew" class="headerlink" title="安装基础工具Xcode和Homebrew"></a>安装基础工具Xcode和Homebrew</h2><p>如果长期使用macOS，不管做不做iOS开发，Xcode都有必要安装一下，虽然我不知道具体有什么用，但这几年的使用经验告诉我，到某个时候你用某个软件或者某个功能的时候，就会需要装上它，那我们不如趁早直接装好，App Store直接下载就好。</p>
+<p>Homebrew作为目前macOS上最流行的包安装工具，也强烈建议安装，Homebrew将大大改进你安装很多小工具的体验，不必再去Google百度找官网找下载，直接brew一下就搞定。</p>
+<p>而Homebrew Cask则是Homebrew的一个扩展，我也是最近才知道这个工具，你可以把它理解成是强化版的Homebrew，有了Homebrew Cask，不只像Git之类的工具可以brew安装，连Google Chrome之类的软件一样能brew安装，部分实现了广大程序员用终端连接整个世界的梦想。</p>
+<p>Homebrew安装软件很方便，而且安装位置也很乖巧的统一在<code>/usr/local/Cellar</code>里，实在是居家必备，下面谈一下Homebrew的安装：</p>
+<h3 id="安装Homebrew"><a href="#安装Homebrew" class="headerlink" title="安装Homebrew"></a>安装Homebrew</h3><p>打开Homebrew的官网，直接就可以复制安装代码：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-homebrewinstall0.png-w800" alt="Homebrew安装"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>打开终端，输入上面的代码，稍等片刻就安装完成：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-homebrewinstall.png-w800" alt="Homebrew安装"><br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-homebrewsuccess.png-w800" alt="Homebrew安装"></p>
+<p>我们可以看到，安装Homebrew时自动安装了依赖的Xcode Command Line。</p>
+<h3 id="安装Homebrew-Cask"><a href="#安装Homebrew-Cask" class="headerlink" title="安装Homebrew Cask"></a>安装Homebrew Cask</h3><p>打开Homebrew Cask官方网站：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-homebrewcask1.png-w800" alt="Homebrew Cask安装"><br>拖到页面最后，可以看到安装方式：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-getcask.png-w800" alt="Homebrew Cask安装"></p>
+<blockquote>
+<p>brew tap caskroom/cask</p>
+</blockquote>
+<p>稍等片刻，安装完成！</p>
+<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><p>由于这一次是有计划的重装系统，这里将所有需要安装的软件进行列表整理，并分批进行安装，安装完成后对需要设置的重要设置的软件进行设置，并在最后统一将未云端化的设置文件云端化。</p>
+<h3 id="待安装软件清单"><a href="#待安装软件清单" class="headerlink" title="待安装软件清单"></a>待安装软件清单</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">软件名称</th>
+<th style="text-align:center">软件类型</th>
+<th style="text-align:center">安装渠道</th>
+<th style="text-align:center">软件性质</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Alfred</td>
+<td style="text-align:center">系统增强</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★★取代Spotlight</td>
+</tr>
+<tr>
+<td style="text-align:center">Surge</td>
+<td style="text-align:center">代理工具</td>
+<td style="text-align:center">官网下载</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★★除了贵没毛病的代理工具</td>
+</tr>
+<tr>
+<td style="text-align:center">Moom</td>
+<td style="text-align:center">系统增强</td>
+<td style="text-align:center">第三方下载</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★控制窗口大小排列</td>
+</tr>
+<tr>
+<td style="text-align:center">Popclip</td>
+<td style="text-align:center">系统增强</td>
+<td style="text-align:center">App Store</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★增强文字复制粘贴</td>
+</tr>
+<tr>
+<td style="text-align:center">Yoink</td>
+<td style="text-align:center">系统增强</td>
+<td style="text-align:center">App Store</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★临时文件中转仓</td>
+</tr>
+<tr>
+<td style="text-align:center">The Unarchiver</td>
+<td style="text-align:center">压缩解压</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★双击直接解压</td>
+</tr>
+<tr>
+<td style="text-align:center">Karabiner-Elements</td>
+<td style="text-align:center">系统增强</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★改键工具，后续文章有用</td>
+</tr>
+<tr>
+<td style="text-align:center">Dropbox</td>
+<td style="text-align:center">在线存储</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★★★存储小文件为主</td>
+</tr>
+<tr>
+<td style="text-align:center">Google Drive File Stream</td>
+<td style="text-align:center">在线存储</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★★存储大文件</td>
+</tr>
+<tr>
+<td style="text-align:center">iTerm2</td>
+<td style="text-align:center">终端增强</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★★★最佳终端，搭配zsh+antigen</td>
+</tr>
+<tr>
+<td style="text-align:center">Vim</td>
+<td style="text-align:center">终端增强</td>
+<td style="text-align:center">Brew</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★★★程序员必备，搭配Vundle</td>
+</tr>
+<tr>
+<td style="text-align:center">Bartender</td>
+<td style="text-align:center">系统增强</td>
+<td style="text-align:center">Setapp</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★让你的菜单栏整洁</td>
+</tr>
+<tr>
+<td style="text-align:center">iStatMenus</td>
+<td style="text-align:center">系统增强</td>
+<td style="text-align:center">Setapp</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★★增强菜单栏</td>
+</tr>
+<tr>
+<td style="text-align:center">Forklift</td>
+<td style="text-align:center">FTP工具</td>
+<td style="text-align:center">Setapp</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★可用Transmit替代</td>
+</tr>
+<tr>
+<td style="text-align:center">CleanMyMac</td>
+<td style="text-align:center">系统维护</td>
+<td style="text-align:center">Setapp</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★新版本界面不错</td>
+</tr>
+<tr>
+<td style="text-align:center">Dropzone</td>
+<td style="text-align:center">效率工具</td>
+<td style="text-align:center">Setapp</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★图片一拖即上传</td>
+</tr>
+<tr>
+<td style="text-align:center">1Password</td>
+<td style="text-align:center">密码管理</td>
+<td style="text-align:center">官网下载</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★跨平台密码管理</td>
+</tr>
+<tr>
+<td style="text-align:center">TotalFinder</td>
+<td style="text-align:center">系统增强</td>
+<td style="text-align:center">第三方下载</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★增强原生Finder</td>
+</tr>
+<tr>
+<td style="text-align:center">Parallels Desktop</td>
+<td style="text-align:center">虚拟机</td>
+<td style="text-align:center">第三方下载</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★比较好用的虚拟机</td>
+</tr>
+<tr>
+<td style="text-align:center">Webstorm</td>
+<td style="text-align:center">开发工具</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★最佳前端IDE</td>
+</tr>
+<tr>
+<td style="text-align:center">PyCharm</td>
+<td style="text-align:center">开发工具</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★最佳Python IDE</td>
+</tr>
+<tr>
+<td style="text-align:center">IINA</td>
+<td style="text-align:center">影音播放</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★★美观强大的视频播放器</td>
+</tr>
+<tr>
+<td style="text-align:center">Sourcetree</td>
+<td style="text-align:center">Git客户端</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★Git图形客户端</td>
+</tr>
+<tr>
+<td style="text-align:center">Office2019</td>
+<td style="text-align:center">商业软件</td>
+<td style="text-align:center">第三方下载</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★新版本启动速度不错</td>
+</tr>
+<tr>
+<td style="text-align:center">Reeder</td>
+<td style="text-align:center">RSS阅读</td>
+<td style="text-align:center">第三方下载</td>
+<td style="text-align:center">收费</td>
+<td style="text-align:left">★★★★跨平台美观强大</td>
+</tr>
+<tr>
+<td style="text-align:center">QQ</td>
+<td style="text-align:center">即时通讯</td>
+<td style="text-align:center">Brew Cask</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★不装也不行</td>
+</tr>
+<tr>
+<td style="text-align:center">印象笔记</td>
+<td style="text-align:center">笔记工具</td>
+<td style="text-align:center">App Store</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★★最好的笔记应用</td>
+</tr>
+<tr>
+<td style="text-align:center">Pocket</td>
+<td style="text-align:center">笔记工具</td>
+<td style="text-align:center">App Store</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★★网页收藏工具</td>
+</tr>
+<tr>
+<td style="text-align:center">Spark</td>
+<td style="text-align:center">邮件处理</td>
+<td style="text-align:center">App Store</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★★最好的邮件客户端</td>
+</tr>
+<tr>
+<td style="text-align:center">☆微信</td>
+<td style="text-align:center">即时通讯</td>
+<td style="text-align:center">App Store</td>
+<td style="text-align:center">免费</td>
+<td style="text-align:left">★★★喜欢电脑聊微信就装</td>
+</tr>
+</tbody>
+</table>
+<p>除了微信本人不安装以及TotalFinder安装需要重启进恢复模式关闭SIP暂时未安装外，以上列表中所有软件都已经安装完毕，考虑到其中包含大量收费软件，本文的最后会付上所有软件的下载地址，有经济能力的支持正版，觉得太贵的用破解也无妨。</p>
+<p>另外，考虑到破解的软件经常跟不上更新，最近购买了Setapp的一年订阅，上表中安装渠道为Setapp的即是包含在这一订阅包中的软件，由于软件包所有软件都是在订阅期内免费的，所以还顺手安装了以下几个软件：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">软件名称</th>
+<th style="text-align:center">软件类型</th>
+<th style="text-align:center">功能</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Boom 3D</td>
+<td style="text-align:center">音频增强</td>
+<td style="text-align:center">增大音量提高音质配合iPhone可远程控制</td>
+<td style="text-align:center">有破解版</td>
+</tr>
+<tr>
+<td style="text-align:center">Sip</td>
+<td style="text-align:center">取色软件</td>
+<td style="text-align:center">可以取屏幕上任意位置的颜色</td>
+<td style="text-align:center">有破解版</td>
+</tr>
+<tr>
+<td style="text-align:center">Jump Desktop</td>
+<td style="text-align:center">VNC工具</td>
+<td style="text-align:center">比原生的屏幕共享更好用</td>
+<td style="text-align:center">可直接用系统自带Screen Sharing</td>
+</tr>
+<tr>
+<td style="text-align:center">Paste</td>
+<td style="text-align:center">剪贴板管理</td>
+<td style="text-align:center">能够保存剪贴板历史</td>
+<td style="text-align:center">有破解版</td>
+</tr>
+</tbody>
+</table>
+<h3 id="软件安装总结"><a href="#软件安装总结" class="headerlink" title="软件安装总结"></a>软件安装总结</h3><p>第一次短时间内在macOS上安装大量软件，大致按照以下的顺序进行的安装</p>
+<ul>
+<li><p><strong>安装App Store中的软件</strong><br>App Store和Homebrew Cask孰优孰劣难下定论，但如果Homebrew速度更快一点的话，我个人更倾向于尽量Homebrew Cask，因为App Store只管安装不管卸载，意义不大，唯一的优点大概就是速度比较快，有100%的安全保证；<br>另外，对于已经在App Store中购买了的软件，还是直接在App Store下载比较好，比如上面列表中的Popclip和Yoink都是因为本人已经在App Store中购买才选择在App Store中下载。</p>
+</li>
+<li><p><strong>下载Setapp并安装Setapp中的软件</strong><br>对于未订阅Setapp的朋友，本部分可以略过，这其中的软件大部分是收费软件，如果未购买授权，推荐第三方下载破解版本，若已购买授权，则可官网下载或使用Homebrew Cask安装。</p>
+</li>
+<li><p><strong>Homebrew安装软件</strong><br>Homebrew在安装常用软件上并不突出，其主要是用于安装各种库以及插件的，本次需要安装的软件中仅有Vim需要使用homebrew安装，一个<code>brew install vim</code>命令就能够安装上最新的Vim8.1，安装过程中会同时下载安装所有依赖不必我们担心。</p>
+</li>
+<li><p><strong>Homebrew Cask安装软件</strong><br>这个工具的强大超过我的想象，像上面列表中的Webstorm和Pycharm都可以直接安装，其他的像Dropbox以及Google的各种工具也可以很方便的安装，安装之后可以使用brew cask相关命令统一管理，非常好用。</p>
+</li>
+<li><p><strong>官网/第三方下载安装</strong><br>部分软件Homebrew下载链接出错，无法下载成功，可选择直接访问官网下载，如1Password，另外对于需要破解的软件，直接前往第三方网站下载安装，因为Homebrew Cask提供的均为原版软件不包含破解。</p>
+</li>
+<li><p><strong>常用大型软件安装</strong><br>常用软件安装完成后，安装工作生活中需要用到的大型软件，典型的比较Office，本次暂时安装了Office 2019和Parallels Desktop。</p>
+</li>
+</ul>
+<h2 id="后续需要的工作"><a href="#后续需要的工作" class="headerlink" title="后续需要的工作"></a>后续需要的工作</h2><p>到这一步，万里长征算是开了个头，安装好了熟悉的软件，却还没有找回熟悉的配置，需要一点一点的找回来，通过梳理，重点包括以下工作：</p>
+<ul>
+<li>Zsh+antigen+iTerm2，打造优雅终端——效果图如下：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-iterm3.png-w800" alt="Zsh+antigen+iTerm2"><br>特征包括命令错误提示、git集成、命令补全提示、隐藏用户名等，通过zsh的插件可以实现更加强大的功能</li>
+<li>Vundle+Vim，终端利器如虎添翼</li>
+<li>Karabiner-Elements高效改键：<br>本人仅使用了<code>CapsLock</code>映射为<code>Ctrl</code>、右<code>option</code>映射为<code>CapsLock</code>，右<code>Command</code>映射为F17实现输入法快速切换，并通过鼠须管输入法配置实现一键快速切换中英文输入法，并结合ShowyEdge的菜单栏变色功能清晰提示。</li>
+<li>配置文件云端化<br>按原计划，在所有工作完成后，需要将涉及到的主要配置内容的同步方式进行整理，为今后再次配置时节约时间。</li>
+</ul>
+<p>以上内容计划在后续文章中陆续发布，敬请期待，晚些时候补充本文涉及到的软件下载地址。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/macOS/" rel="tag"><i class="fa fa-tag"></i> macOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/23/从零开始打造优雅易用的macOS之终端配置/" rel="prev" title="从零开始打造优雅易用的macOS之终端配置">
+                从零开始打造优雅易用的macOS之终端配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Beta</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要重装系统"><span class="nav-number">2.</span> <span class="nav-text">为什么要重装系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作macOS-Mojave安装盘"><span class="nav-number">3.</span> <span class="nav-text">制作macOS Mojave安装盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全新安装macOS-Mojave"><span class="nav-number">4.</span> <span class="nav-text">全新安装macOS Mojave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置Time-Machine"><span class="nav-number">5.</span> <span class="nav-text">设置Time Machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统安装后几个改动"><span class="nav-number">6.</span> <span class="nav-text">系统安装后几个改动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭Guest用户"><span class="nav-number">6.1.</span> <span class="nav-text">关闭Guest用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开允许从”任何来源“安装软件"><span class="nav-number">6.2.</span> <span class="nav-text">打开允许从”任何来源“安装软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不在桌面显示卷图标"><span class="nav-number">6.3.</span> <span class="nav-text">不在桌面显示卷图标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改常用快捷键"><span class="nav-number">6.4.</span> <span class="nav-text">修改常用快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装基础工具Xcode和Homebrew"><span class="nav-number">7.</span> <span class="nav-text">安装基础工具Xcode和Homebrew</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Homebrew"><span class="nav-number">7.1.</span> <span class="nav-text">安装Homebrew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Homebrew-Cask"><span class="nav-number">7.2.</span> <span class="nav-text">安装Homebrew Cask</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件安装"><span class="nav-number">8.</span> <span class="nav-text">软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#待安装软件清单"><span class="nav-number">8.1.</span> <span class="nav-text">待安装软件清单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件安装总结"><span class="nav-number">8.2.</span> <span class="nav-text">软件安装总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后续需要的工作"><span class="nav-number">9.</span> <span class="nav-text">后续需要的工作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beta</span>
+ <span>&nbsp;<a href="http://www.miitbeian.gov.cn/">粤ICP备15055157号-1</a></span>
+
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+      <div>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bcfe35a7fa9eea9" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

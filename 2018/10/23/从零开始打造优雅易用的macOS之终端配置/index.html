@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言终端是我们非常常用的工具，如果你拥有足够技巧，它几乎无所不能，可以管理本地文件，可以通过ssh命令管理远程服务器，可以查看进程、端口信息、网络信息等所有你想要的信息，有了Homebrew以后还可以安装大部分你想要安装的软件，这样一个全能的工具，怎么能容忍它像macOS自带的一样难看又不易用，本文的目的就是分享一下终端配置，照着我的步骤一步一步来，你就能拥有同样美观易用的终端。 最终效果">
+<meta name="keywords" content="macOS,shell,Zsh,iTerm2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始打造优雅易用的macOS之终端配置">
+<meta property="og:url" content="http://pbeta.cn/2018/10/23/从零开始打造优雅易用的macOS之终端配置/index.html">
+<meta property="og:site_name" content="Way to Go">
+<meta property="og:description" content="前言终端是我们非常常用的工具，如果你拥有足够技巧，它几乎无所不能，可以管理本地文件，可以通过ssh命令管理远程服务器，可以查看进程、端口信息、网络信息等所有你想要的信息，有了Homebrew以后还可以安装大部分你想要安装的软件，这样一个全能的工具，怎么能容忍它像macOS自带的一样难看又不易用，本文的目的就是分享一下终端配置，照着我的步骤一步一步来，你就能拥有同样美观易用的终端。 最终效果">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-iterm3.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-iterm1.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-shell2.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-shell3.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen1.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen2.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen3c.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigeninit.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen4.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen5.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-synax.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen6.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-zshcompl1.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-zshcompl2.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-completion.gif">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-jump.gif">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-username.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-man.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-iermthemesite.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermtheme1.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermtheme2.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermhotkeywin.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermhotkeywin2.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermhotkeywin3.png-w800">
+<meta property="og:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermhotkeywin4.png-w800">
+<meta property="og:updated_time" content="2018-10-25T09:36:21.803Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始打造优雅易用的macOS之终端配置">
+<meta name="twitter:description" content="前言终端是我们非常常用的工具，如果你拥有足够技巧，它几乎无所不能，可以管理本地文件，可以通过ssh命令管理远程服务器，可以查看进程、端口信息、网络信息等所有你想要的信息，有了Homebrew以后还可以安装大部分你想要安装的软件，这样一个全能的工具，怎么能容忍它像macOS自带的一样难看又不易用，本文的目的就是分享一下终端配置，照着我的步骤一步一步来，你就能拥有同样美观易用的终端。 最终效果">
+<meta name="twitter:image" content="https://img.pbeta.cn/01/1810/1/macosfromzero-iterm3.png-w800">
+
+
+
+
+
+
+  <link rel="canonical" href="http://pbeta.cn/2018/10/23/从零开始打造优雅易用的macOS之终端配置/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>从零开始打造优雅易用的macOS之终端配置 | Way to Go</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126629388-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-126629388-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Way to Go</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Something Remains</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-software">
+    <a href="/software" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-download"></i> <br>软件</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://pbeta.cn/2018/10/23/从零开始打造优雅易用的macOS之终端配置/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Way to Go">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从零开始打造优雅易用的macOS之终端配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-23 15:50:20" itemprop="dateCreated datePublished" datetime="2018-10-23T15:50:20+08:00">2018-10-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-25 17:36:21" itemprop="dateModified" datetime="2018-10-25T17:36:21+08:00">2018-10-25</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>终端是我们非常常用的工具，如果你拥有足够技巧，它几乎无所不能，可以管理本地文件，可以通过ssh命令管理远程服务器，可以查看进程、端口信息、网络信息等所有你想要的信息，有了Homebrew以后还可以安装大部分你想要安装的软件，这样一个全能的工具，怎么能容忍它像macOS自带的一样难看又不易用，本文的目的就是分享一下终端配置，照着我的步骤一步一步来，你就能拥有同样美观易用的终端。</p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero-iterm3.png-w800" alt="最终效果"><br><a id="more"></a></p>
+<h2 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h2><h3 id="1-安装iTerm2"><a href="#1-安装iTerm2" class="headerlink" title="1. 安装iTerm2"></a>1. 安装iTerm2</h3><p>推荐使用Homebrew Cask安装：在终端输入<code>homebrew cask install iterm2</code>即可，稍等片刻即可完成安装，安装完成后打开，会提示我们是不是要移动到“应用程序”文件夹，移动不移动均可，打开后界面是这样的：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-iterm1.png-w800" alt=""><br>有朋友可能要问，说好的美观呢？不要着急，要一步一步来，我们先解决Zsh的问题，最后再换最合适的配色。</p>
+<h3 id="2-切换默认shell到Zsh"><a href="#2-切换默认shell到Zsh" class="headerlink" title="2. 切换默认shell到Zsh"></a>2. 切换默认shell到Zsh</h3><p>shell和终端是两回事，你可以使用不同的终端程序，同样也可以使用不同的shell，macOS默认的shell是bash，但shell远不止bash一种，macOS自带的就有好几种，可以通过终端运行<code>cat /etc/shells</code>查看：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-shell2.png-w800" alt="查看macOS自带的shell"><br>从列表中可以看到macOS默认已经安装了我们需要的Zsh，输入shell名称就可以进入对应的shell，这里我们不关注其他的shell，我们只关注Zsh，这就是传说中的“终极shell”，毕竟人家名字就是最后一个英文字母Z，很霸气。</p>
+<p>但如果只是通过输入shell名字来切换shell，那每次打开终端都需要手动切换一次，这也太麻烦了，可以通过<code>chsh -s</code>命令来切换默认shell，注意这个命令后面不能只跟shell名称，需要完整路径，我们可以通过which命令获取，然后使用<code>chsh -s</code>命令修改即可：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-shell3.png-w800" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure></p>
+<p>OK，现在我们已经将默认shell切换成了Zsh，可以继续下面的配置了。</p>
+<h3 id="Zsh配置"><a href="#Zsh配置" class="headerlink" title="Zsh配置"></a>Zsh配置</h3><p>传说中，zsh虽然是一个很棒的shell，但配置复杂，让普通用户望而却步，直到后来有一个叫robbyrussell的大神自己配置了一套方案并制作了一个叫<code>Oh My Zsh</code>的工具把自己的配置文件共享了出来才让Zsh逐步流行开来。</p>
+<p>如今Zsh的配置工具已经不止<code>Oh My Zsh</code>一种了，我使用的是配置更为直观方便的antigen。</p>
+<h4 id="安装antigen"><a href="#安装antigen" class="headerlink" title="安装antigen"></a>安装antigen</h4><p>和<code>Oh My Zsh</code>比起来，<code>antigen</code>要冷门的多，但经过使用本人发现，antigen更符合我们的操作习惯，如果你使用过Vundle来管理Vim的插件的话，你一定会更偏爱antigen这种管理Zsh插件的方式的,更详细的介绍可以打开项目<a href="https://github.com/zsh-users/antigen" target="_blank" rel="noopener">Github主页</a>查看。</p>
+<p>antigen安装非常简单：</p>
+<p>Github上提供了两种安装方式，使用curl或者git：</p>
+<blockquote>
+<p>curl -L git.io/antigen &gt; antigen.zsh<br>or use git.io/antigen-nightly for the latest version</p>
+</blockquote>
+<p>但我推荐使用万能的Homebrew来安装，命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install antigen</span><br></pre></td></tr></table></figure></p>
+<p>执行命令的时候发现报错，告诉我们需要修改<code>/usr/local/share/man/man8</code>目录的所有者：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen1.png-w800" alt=""><br>经Google搜索决定直接修改<code>/usr/local</code>的所有者，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R 你的用户名 /usr/local</span><br></pre></td></tr></table></figure>
+<p>之后再执行<code>brew install antigen</code>就可以完成安装：</p>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen2.png-w800" alt="antigen安装成功"></p>
+<p>OK，antigen安装成功，下面我们需要做的是：</p>
+<ul>
+<li>创建<code>~/.zshrc</code>文件作为zsh的配置文件</li>
+<li>初始化antigen的Zsh配置</li>
+</ul>
+<h4 id="Zsh基本配置"><a href="#Zsh基本配置" class="headerlink" title="Zsh基本配置"></a>Zsh基本配置</h4><p>我们直接复制antigen的Github主页的<code>~/.zshrc</code>配置内容模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">source /path-to-antigen/antigen.zsh</span><br><span class="line"></span><br><span class="line"># Load the oh-my-zsh&apos;s library.</span><br><span class="line">antigen use oh-my-zsh</span><br><span class="line"></span><br><span class="line"># Bundles from the default repo (robbyrussell&apos;s oh-my-zsh).</span><br><span class="line">antigen bundle git</span><br><span class="line">antigen bundle heroku</span><br><span class="line">antigen bundle pip</span><br><span class="line">antigen bundle lein</span><br><span class="line">antigen bundle command-not-found</span><br><span class="line"></span><br><span class="line"># Syntax highlighting bundle.</span><br><span class="line">antigen bundle zsh-users/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"># Load the theme.</span><br><span class="line">antigen theme robbyrussell</span><br><span class="line"></span><br><span class="line"># Tell Antigen that you&apos;re done.</span><br><span class="line">antigen apply</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，其中<code>path-to-antigen</code>需要换成我们的antigen安装路径，这个路径在安装antigen完成后已经提示我们了：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen3c.png-w800" alt=""></p>
+<p>因此，需要我们把第一行改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /usr/local/share/antigen/antigen.zsh</span><br></pre></td></tr></table></figure></p>
+<p>下面我们在Home文件夹下新建.zshrc，直接使用<code>vim ~/.zshrc</code>新建即可，然后将上面的模板内容粘贴进去，不过要记得改第一行。</p>
+<p>完成之后在终端输入<code>source ~/.zshrc</code>马上生效,如果有新增加的插件，会显示<code>Installing XXX</code>，这里忘了截图，完成后你的终端就变成了这样：</p>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigeninit.png-w800" alt=""></p>
+<p>很好，antigen的安装和基础配置已经生效了，下面我们需要做的是：</p>
+<ul>
+<li>更换喜欢的主题，养眼最重要</li>
+<li>安装其他实用插件，增强Zsh</li>
+</ul>
+<h4 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h4><p>zsh自带了很多很多主题，使用<code>antigen theme 主题名</code>命令就可以直接在终端中更换，也可以用<code>antigen theme random</code>来更换为随机主题，可以自行体验各种主题。</p>
+<p>作为外貌党，本人尝试了很多主题，最后还是觉得<strong><code>agnoster</code></strong>这个主题最符合本人审美，所以一直使用，当然不排除有其他更棒的主题我没有发现，有兴趣的朋友可以再发掘，有能力的朋友还可以自己修改主题，这里我们先看一下agnoster的样子：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen4.png-w800" alt="agnoster主题"><br>不出意外的出现了乱码，因为这个主题需要Melso等字体的支持，现在这台全新安装的系统自然是没有的，我们从<a href="https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Regular%20for%20Powerline.ttf" target="_blank" rel="noopener">这里</a>下载字体，进入页面后，点击“View Raw”即可下载，下载完成后双击安装即可。</p>
+<p>也可以选择其他Powerline字体，可查看<a href="https://gist.github.com/kevin-smets/8568070" target="_blank" rel="noopener">这个页面</a>中的“Install a patched font”部分。</p>
+<p>安装完成后需要到iTerm2的设置中修改字体为Melso，</p>
+<p><code>Preference——&gt;Profiles——&gt;左侧Default——&gt;Text——&gt;下方Change Font</code></p>
+<p>选择<code>Melso LG M Regular for Powerline</code>，修改完成后，乱码问题就解决了：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen5.png-w800" alt=""></p>
+<p>不过我们只是通过<code>antigen theme</code>命令临时更换了主题，如果需要永久更换为agnoster主题，在终端中输入<code>vim ~/.zshrc</code>之后，将主题设置行的<code>antigen theme robbyrussel</code>修改为<code>antigen theme agnoster</code>，保存退出后<code>source ~/.zshrc</code>即可,若看不到效果生效重启终端即可。</p>
+<p>主题的工作就完成了，下面我们需要做的是：</p>
+<ul>
+<li>了解Zsh的强大功能</li>
+<li>通过插件增强Zsh的功能</li>
+</ul>
+<h4 id="功能展示及插件安装"><a href="#功能展示及插件安装" class="headerlink" title="功能展示及插件安装"></a>功能展示及插件安装</h4><p>通过安装插件，Zsh可以变得非常强大，知乎用户韦易笑的一个回答中非常直观的展示了Zsh的强大，可以点击点击链接查看——<a href="https://www.zhihu.com/question/21418449/answer/300879747" target="_blank" rel="noopener">为什么说 zsh 是 shell 中的极品？ - 韦易笑的回答 - 知乎</a>。</p>
+<p>作为普通macOS用户，我们并不需要太多的功能，毕竟功能强大同时也意味着需要额外的配置、额外的学习成本以及额外的系统资源，因此我们需要一个折衷，在这里我们参考知乎上的内容进行功能展示，分享一下本人目前的简单配置，并说明如何通过安装插件实现。</p>
+<h5 id="色彩高亮"><a href="#色彩高亮" class="headerlink" title="色彩高亮"></a>色彩高亮</h5><blockquote>
+<p>检查命令输入是否错误</p>
+</blockquote>
+<p>这一插件很实用，能够根据你的输入实时判断命令的正确与否，红色代表错误命令，绿色代表正确命令，白色则为参数、文件名等，如果你敲完了命令，发现是红的，不用运行你就应该知道你哪里输错了。</p>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-synax.png-w800" alt="色彩高亮"></p>
+<p><strong>插件安装方法</strong></p>
+<p>这一功能已经包含在了antigen的模板配置文件中，<code>~/.zshrc</code>中的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Syntax highlighting bundle.</span><br><span class="line">antigen bundle zsh-users/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure></p>
+<p>实现的就是这个功能，无须额外安装。</p>
+<h5 id="命令提示"><a href="#命令提示" class="headerlink" title="命令提示"></a>命令提示</h5><blockquote>
+<p>越来越聪明的智能提示</p>
+</blockquote>
+<p>终端下命令非常多，即使是使用终端多年的朋友也无法全部记住，特别是各种参数更是令人眼花缭乱，这个时候命令提示功能就能一展身手了，当你输入时，插件会根据你的历史输入信息自动提示，比如我这一会经常在用<code>vim ~/.zshrc</code>命令来修改Zsh配置，安装这个插件后，我一输入v,插件就根据我的历史输入情况，用浅色显示提示了后面内容：</p>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-antigen6.png-w800" alt="命令提示"></p>
+<p>这个时候只要按住<code>Ctrl+F</code>键，就可以自动输入提示的内容，非常方便。这个功能对于那些输入次数不多内容又长的命令实在是神器，比如你偶尔需要登录的远程服务器，你输入一个ssh，后面就给你补全了，还有解压缩命令的参数，运行过一次后就能智能提示，再也不怕记不住了。</p>
+<p><strong>插件安装方法</strong></p>
+<p>终端中输入<code>vim ~/.zshrc</code>,在<code>.zshrc</code>中添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">antigen bundle zsh-users/zsh-autosuggestions</span><br></pre></td></tr></table></figure></p>
+<p>保存之后，<code>source ~/.zshrc</code>或者重启终端即可。</p>
+<h5 id="智能补全"><a href="#智能补全" class="headerlink" title="智能补全"></a>智能补全</h5><blockquote>
+<p>一个Tab走遍天下</p>
+</blockquote>
+<p>Zsh的补全功能非常强大，不需要插件就能拥有非常好的体验，比如知乎那篇介绍中提到的几个功能，均不需要安装额外的插件,比如你知道目录子目录情况下，可以通过类似这样的命令使用Tab补全：</p>
+<blockquote>
+<p>补全前</p>
+</blockquote>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-zshcompl1.png-w800" alt="Tab补全前"></p>
+<blockquote>
+<p>按Tab补全效果</p>
+</blockquote>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-zshcompl2.png-w800" alt="Tab补全后"></p>
+<p><code>cd</code>命令加Tab你几乎可以在目录里自由跳转，输入cd后按Tab键会出现所有目录，再按一次Tab键则可以在所有目录里跳转，这时不仅可以使用Tab键跳转，还可以使用方向键，避免只能一个一个的跳转，这样文件夹再多也不怕了，这体验真的是好极了。</p>
+<p>放一个动图展示一下：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-completion.gif" alt="Tab自动补全"></p>
+<p>对于命令参数的补全功能也非常实用，输入命令 -，按Tab就可以提示该命令包含的参数，用Tab键选中参数后，回车就可以直接输入。</p>
+<p><strong>插件安装方法：</strong></p>
+<p>Zsh自身已经包含了大量补全功能，通过插件可以强化这一功能，终端中输入<code>vim ~/.zshrc</code>,在.zshrc中添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">antigen bundle zsh-users/zsh-completions</span><br></pre></td></tr></table></figure></p>
+<p>保存之后，<code>source ~/.zshrc</code>或者重启终端即可。</p>
+<h5 id="快速跳转"><a href="#快速跳转" class="headerlink" title="快速跳转"></a>快速跳转</h5><blockquote>
+<p>切换目录随心所欲</p>
+</blockquote>
+<ul>
+<li>利用<code>cd -</code>配合Tab键快速切换历史目录：<br>系统自带的bash只能一级一级的切换到上一次查看的目录，Zsh则完全不受此约束，结合Tab键可以快速跳转到之前访问过的任一目录：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-jump.gif" alt="cd -跳转"></li>
+<li>通过安装z.sh实现更强大的跳转<br>如果你是一个运维人员，可能会很需要这样的工具，但对于大部分普通用户而言，需求比较有限，因此我没有安装这一插件，<code>z.sh</code>可以认为是<code>cd -</code>的强化版，后者只能记录本次使用Zsh访问过的目录，而<code>z.sh</code>则可以记住从使用Zsh以来你访问过的目录，并会统计次数形成权重，基于权重让你能够最快的访问到你最经常访问的目录，具体可以查看<a href="https://www.zhihu.com/question/21418449/answer/300879747" target="_blank" rel="noopener">知乎韦易笑的回答</a>来了解z.sh的强大功能。</li>
+</ul>
+<p><strong>插件安装方法：</strong></p>
+<p>需要z.sh的朋友，只需要在终端中输入<code>vim ~/.zshrc</code>,在.zshrc中添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">antigen bundle rupa/z z.sh</span><br></pre></td></tr></table></figure></p>
+<p>保存之后，<code>source ~/.zshrc</code>或者重启终端即可。</p>
+<h4 id="另外几个Zsh的实用技巧"><a href="#另外几个Zsh的实用技巧" class="headerlink" title="另外几个Zsh的实用技巧"></a>另外几个Zsh的实用技巧</h4><ul>
+<li>使用cd命令的时候，若不带参数，cd可以省略</li>
+<li>隐藏命令提示符前的主机名用户名：<br>只需要在.zshrc中添加<code>DEFAULT_USER=&quot;你的用户名&quot;</code>，source或者重启终端即可,要注意用户名大小写。</li>
+</ul>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-username.png-w800" alt="隐藏主机名用户名"></p>
+<ul>
+<li>man命令彩色显示：<br>只需要在.zshrc中添加如下内容：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#为man命令增加结果高亮显示</span><br><span class="line">export LESS_TERMCAP_mb=$&apos;\E[01;31m&apos;       # begin blinking</span><br><span class="line">export LESS_TERMCAP_md=$&apos;\E[01;38;5;74m&apos;  # begin bold</span><br><span class="line">export LESS_TERMCAP_me=$&apos;\E[0m&apos;           # end mode</span><br><span class="line">export LESS_TERMCAP_se=$&apos;\E[0m&apos;           # end standout-mode</span><br><span class="line">export LESS_TERMCAP_so=$&apos;\E[38;5;246m&apos;    # begin standout-mode - info box</span><br><span class="line">export LESS_TERMCAP_ue=$&apos;\E[0m&apos;           # end underline</span><br><span class="line">export LESS_TERMCAP_us=$&apos;\E[04;38;5;146m&apos; # begin underline</span><br></pre></td></tr></table></figure>
+<p>之后，<code>source ~/.zshrc</code>或重启终端即可，效果：</p>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-zsh-man.png-w800" alt="man命令高亮显示"></p>
+<h3 id="iTerm配置"><a href="#iTerm配置" class="headerlink" title="iTerm配置"></a>iTerm配置</h3><p>Zsh的主要配置已经完成了，喜欢折腾的朋友可以自己去安装新插件，不喜欢折腾的朋友可以至此为止了，拥有了上面几个简单的插件，Zsh带给我们的用户体验已经非常棒了，现在我们一起来对iTerm进行一些配置，让iTerm与系统更协调。</p>
+<h4 id="更换配色主题"><a href="#更换配色主题" class="headerlink" title="更换配色主题"></a>更换配色主题</h4><p>美观永远是第一位的，看上面这些截图的配色，实在谈不上美观，话不多说，我们动手修改一下，前人已经建立了iTerm主题站，将大量主题打包提供，我们只需下载这个主题包，并通过查看主页选择自己喜欢的主题后导入即可：</p>
+<p><a href="https://iterm2colorschemes.com" target="_blank" rel="noopener">点击访问iTerm2主题站</a><br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-iermthemesite.png-w800" alt="iTerm2主题站"></p>
+<p>导入方式如下：<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermtheme1.png-w800" alt="导入iTerm2主题"><br>很多好看的主题，这里我暂时直接导入了经典的Molokai主题，可以自己进行一些微调。<br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermtheme2.png-w800" alt="导入iTerm2主题"></p>
+<p>OK，主题暂不折腾，有时间可以从那么多主题里面慢慢挑。</p>
+<h4 id="Hotkey-Window"><a href="#Hotkey-Window" class="headerlink" title="Hotkey Window"></a>Hotkey Window</h4><p>终端作为常用工具，时不时呼出一下是很有必要的，如果呼出的界面再能有点逼格那就现好不过了，很久以前我就参考网上教程设置了Hotkey Window，虽然很简单，但逼格十足，所以这里还是要说一下：</p>
+<ol>
+<li>进入<code>Preference</code>设置界面，目前我们已经有了一个<code>Default</code>默认配置，点击左下角的+号，新增一个设置，命名为<code>Hotkey Window</code></li>
+<li>选择<code>Window</code>选项卡，配置<code>Hotkey Window</code><br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermhotkeywin.png-w800" alt="Hotkey Window"><br>和要的是Style要选择<code>Full-Width Top of Screen</code>，透明度等自己根据喜好设置。</li>
+<li>选择<code>Keys</code>选项卡，为<code>Hotkey Window</code>添加快捷键，我使用的是<code>Command+option+T</code><br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermhotkeywin2.png-w800" alt="Hotkey Windows设置快捷键"><br><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermhotkeywin3.png-w800" alt="Hotkey Windows设置快捷键"></li>
+</ol>
+<p>设置完成后就可以用全局快捷键<code>Command+option+T</code>在屏幕上方呼出一个半透明的终端窗口，再按一次<code>Command+option+T</code>关闭。</p>
+<p><img src="https://img.pbeta.cn/01/1810/1/macosfromzero2-itermhotkeywin4.png-w800" alt="Hotkey Window效果"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>对终端的配置暂时告一段落，日后有精力可能会增加一下antigen的几个常用命令使用，增加几个Zsh插件的说明，并补充一下使用iTerm2配置快速登录SSH服务器等内容。</p>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><p>本文内容部分参考了以下文章，向作者表示感谢：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/beb32dda86f0" target="_blank" rel="noopener">Mac OS 终端利器 iTerm2</a></li>
+<li><a href="https://blog.csdn.net/u011054333/article/details/79314095" target="_blank" rel="noopener">antigen简介</a></li>
+<li><a href="https://www.zhihu.com/question/21418449/answer/300879747" target="_blank" rel="noopener">为什么说 zsh 是 shell 中的极品？</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/macOS/" rel="tag"><i class="fa fa-tag"></i> macOS</a>
+          
+            <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
+          
+            <a href="/tags/Zsh/" rel="tag"><i class="fa fa-tag"></i> Zsh</a>
+          
+            <a href="/tags/iTerm2/" rel="tag"><i class="fa fa-tag"></i> iTerm2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/22/从零开始打造优雅易用的macOS之系统及软件安装/" rel="next" title="从零开始打造优雅易用的macOS之系统及软件安装">
+                <i class="fa fa-chevron-left"></i> 从零开始打造优雅易用的macOS之系统及软件安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/24/从零开始打造优雅易用的macOS之输入法配置/" rel="prev" title="从零开始打造优雅易用的macOS之输入法配置">
+                从零开始打造优雅易用的macOS之输入法配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Beta</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最终效果"><span class="nav-number">2.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体步骤"><span class="nav-number">3.</span> <span class="nav-text">具体步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装iTerm2"><span class="nav-number">3.1.</span> <span class="nav-text">1. 安装iTerm2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-切换默认shell到Zsh"><span class="nav-number">3.2.</span> <span class="nav-text">2. 切换默认shell到Zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zsh配置"><span class="nav-number">3.3.</span> <span class="nav-text">Zsh配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装antigen"><span class="nav-number">3.3.1.</span> <span class="nav-text">安装antigen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Zsh基本配置"><span class="nav-number">3.3.2.</span> <span class="nav-text">Zsh基本配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改主题"><span class="nav-number">3.3.3.</span> <span class="nav-text">修改主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#功能展示及插件安装"><span class="nav-number">3.3.4.</span> <span class="nav-text">功能展示及插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#色彩高亮"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">色彩高亮</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#命令提示"><span class="nav-number">3.3.4.2.</span> <span class="nav-text">命令提示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#智能补全"><span class="nav-number">3.3.4.3.</span> <span class="nav-text">智能补全</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#快速跳转"><span class="nav-number">3.3.4.4.</span> <span class="nav-text">快速跳转</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#另外几个Zsh的实用技巧"><span class="nav-number">3.3.5.</span> <span class="nav-text">另外几个Zsh的实用技巧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iTerm配置"><span class="nav-number">3.4.</span> <span class="nav-text">iTerm配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#更换配色主题"><span class="nav-number">3.4.1.</span> <span class="nav-text">更换配色主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hotkey-Window"><span class="nav-number">3.4.2.</span> <span class="nav-text">Hotkey Window</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感谢"><span class="nav-number">5.</span> <span class="nav-text">感谢</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Beta</span>
+ <span>&nbsp;<a href="http://www.miitbeian.gov.cn/">粤ICP备15055157号-1</a></span>
+
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+      <div>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bcfe35a7fa9eea9" async="async"></script>
+</div>
+
+      </div>
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
